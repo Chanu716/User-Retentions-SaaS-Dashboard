@@ -1,0 +1,12 @@
+{
+  "items": [
+    { "id": 1, "title": "Welcome item", "completed": false },
+    { "id": 2, "title": "Second item", "completed": true }
+  ],
+  "users": [
+    { "id": 1, "name": "Demo User", "email": "demo@example.com" }
+  ],
+  "notes": [
+    { "id": 1, "text": "This db.json is for demoing json-server CRUD operations." }
+  ]
+}

@@ -1,0 +1,143 @@
+:root {
+  --bg: #0b0c10; /* space black */
+  --bg-2: #111214;
+  --surface: #0f1113;
+  --muted: #9aa0a6;
+  --text: #e7e9ea;
+  --accent: #FF6D00; /* McLaren orange */
+  --glass: rgba(255,255,255,0.03);
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+  color: var(--text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Navigation overrides (Tailwind classes may set bg-white) */
+nav {
+  background-color: var(--surface) !important;
+  color: var(--text) !important;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+}
+nav a {
+  color: var(--muted) !important;
+  text-decoration: none;
+}
+nav a:hover {
+  color: var(--accent) !important;
+}
+
+.min-h-screen { min-height: 100vh; }
+
+/* Main container */
+/* Main container */
+main {
+  padding: 1.5rem 12px;
+}
+
+/* centered content container similar to max-w-7xl mx-auto */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 12px;
+}
+
+/* Navigation layout helpers */
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.brand { font-weight: 700; font-size: 1.1rem; }
+.nav-links { display: flex; gap: 16px; align-items: center; }
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.kpi-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.45);
+  border-left: 4px solid rgba(255,255,255,0.03);
+}
+.kpi-card .value { font-size: 1.6rem; font-weight: 700; color: var(--text); }
+.kpi-card .label { color: var(--muted); font-size: 0.9rem; }
+
+.accent { color: var(--accent); }
+.btn-accent {
+  background: linear-gradient(90deg, var(--accent), #ff8f3a);
+  color: #0b0c10;
+  padding: 0.5rem 0.9rem;
+  border-radius: 6px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-accent:hover { filter: brightness(.95); }
+
+.card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.6);
+}
+
+/* page wrapper to improve spacing */
+.page {
+  margin-bottom: 1rem;
+}
+
+/* page padding for consistent spacing */
+.page {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+/* Headings */
+h1 { font-size: 1.6rem; margin: 0 0 0.4rem 0; color: var(--text); }
+h2 { font-size: 1.05rem; margin: 0; color: var(--text); }
+
+.card { overflow: hidden; }
+
+.chart-wrap { min-height: 220px; }
+
+/* Tables & cohorts */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--text);
+}
+th, td {
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+th { color: var(--muted); font-weight: 600; font-size: 0.85rem; }
+
+.chart-wrap { padding: 0.5rem; background: transparent; }
+
+/* Utility */
+.muted { color: var(--muted); }
+.small { font-size: 0.85rem; }
+
+/* Make some Tailwind-style classes match theme */
+.bg-white { background: transparent !important; }
+.text-gray-600 { color: var(--muted) !important; }
+.text-indigo-600 { color: var(--accent) !important; }
+
+/* Responsive tweaks */
+@media (max-width: 640px) {
+  .kpi-grid { grid-template-columns: 1fr; }
+}
