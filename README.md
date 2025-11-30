@@ -107,6 +107,12 @@ SaaS/
 │   ├── index.html
 │   └── favicon.ico
 ├── src/
+```
+SaaS/
+├── public/
+│   ├── index.html
+│   └── favicon.ico
+├── src/
 │   ├── components/
 │   │   ├── Header.jsx          # Page header with title & search
 │   │   └── Sidebar.jsx         # Navigation sidebar (desktop & mobile)
@@ -122,11 +128,15 @@ SaaS/
 │   ├── App.js                  # Root component with routing
 │   ├── index.js                # React entry point
 │   └── index.css               # Custom CSS + Tailwind directives
-├── db.json                     # Mock database (12 users + analytics)
+├── api/
+│   ├── server.js               # JSON Server with CORS
+│   ├── db.json                 # Mock database (12 users + analytics)
+│   ├── package.json            # API dependencies
+│   └── railway.json            # Railway configuration
 ├── tailwind.config.js          # Tailwind custom theme
 ├── postcss.config.js           # PostCSS configuration
-├── package.json                # Dependencies & scripts
-├── start.bat                   # Windows batch file to start both servers
+├── package.json                # Frontend dependencies & scripts
+├── railway.json                # Railway deployment config
 └── README.md                   # This file
 
 ```
@@ -152,17 +162,15 @@ SaaS/
    npm install
    ```
 
-3. **Start the application** (Windows)
-   ```bash
-   start.bat
-   ```
-   
-   Or manually:
+3. **Start the application**
    ```bash
    # Terminal 1 - Start JSON Server (port 5000)
-   npx json-server db.json --port 5000
+   cd api
+   npm install
+   npm start
 
    # Terminal 2 - Start React App (port 3000)
+   cd ..
    npm start
    ```
 
@@ -280,11 +288,19 @@ npm run build
 # Run tests
 npm test
 
-# Start JSON Server API (port 5000)
-npx json-server db.json --port 5000
+```bash
+# Start React development server (port 3000)
+npm start
 
-# Start both servers (Windows only)
-start.bat
+# Build production-optimized bundle
+npm run build
+
+# Run tests
+npm test
+
+# Start JSON Server API (port 5000)
+cd api
+npm start
 ```
 
 ---
@@ -303,9 +319,9 @@ taskkill /PID <PID> /F
 ```
 
 ### **Charts Not Displaying**
-- Ensure JSON Server is running on port 5000
+- Ensure JSON Server is running (cd api && npm start)
 - Check browser console for API errors
-- Verify `db.json` has user data (should have 12 users)
+- Verify `api/db.json` has user data (should have 12 users)
 - Clear browser cache and reload
 
 ### **Styling Issues**
@@ -337,60 +353,60 @@ taskkill /PID <PID> /F
 
 ## 🚀 Deployment
 
-### **Netlify** (Recommended - One-Click Deploy)
+## 🚀 Deployment
 
-#### **Option 1: Deploy from GitHub (Automated)**
-1. **Push to GitHub** (if not already done)
-   ```bash
-   git add .
-   git commit -m "Ready for deployment"
-   git push origin master
-   ```
+### **Railway** (Recommended - One Platform for Everything)
 
-2. **Connect to Netlify**
-   - Go to [Netlify](https://netlify.com) and sign in
-   - Click **"Add new site"** → **"Import an existing project"**
-   - Select **GitHub** and authorize Netlify
-   - Choose your repository: `User-Retentions-SaaS-Dashboard`
+Deploy both frontend and backend on Railway with automatic CI/CD!
 
-3. **Configure Build Settings** (Auto-detected)
-   - **Build command**: `npm run build`
-   - **Publish directory**: `build`
-   - **Node version**: 18
-   
-4. **Deploy!**
-   - Click **"Deploy site"**
-   - Your site will be live in 2-3 minutes at `https://your-site-name.netlify.app`
+#### **Quick Deploy Steps:**
 
-#### **Option 2: Manual Deploy (Drag & Drop)**
-1. **Build the project**
-   ```bash
-   npm run build
-   ```
+1. **Sign up at [Railway](https://railway.app)** with GitHub
 
-2. **Deploy to Netlify**
-   - Go to [Netlify Drop](https://app.netlify.com/drop)
-   - Drag and drop the `build` folder
-   - Your site is live instantly!
+2. **Deploy Backend API**
+   - Create new project → Deploy from GitHub
+   - Select repository: `User-Retentions-SaaS-Dashboard`
+   - Set root directory: `api`
+   - Generate domain and copy URL
 
-#### **Post-Deployment Notes**
-- ✅ **Routing**: Configured with `_redirects` file for React Router support
-- ✅ **JSON Server**: For backend API, deploy separately on [Railway](https://railway.app) or [Render](https://render.com)
-- ✅ **Environment Variables**: Update API base URL in `src/services/api.js` to your deployed JSON Server URL
-- ✅ **Custom Domain**: Add your domain in Netlify dashboard → Domain settings
+3. **Deploy Frontend**
+   - Create another project → Deploy from GitHub  
+   - Same repository: `User-Retentions-SaaS-Dashboard`
+   - Add environment variable:
+     ```
+     REACT_APP_API_URL=https://your-backend-url.up.railway.app
+     ```
+   - Generate domain
 
-### **Vercel** (Alternative)
-1. Push code to GitHub
-2. Import project in [Vercel dashboard](https://vercel.com)
-3. Deploy with one click
-4. For JSON Server, use Railway or Render
+4. **Done!** Both services auto-deploy on every git push 🎉
+
+**📚 Detailed Guide**: See `RAILWAY_DEPLOYMENT.md` for complete step-by-step instructions
+
+#### **Why Railway?**
+- ✅ **Free Tier**: $5 credit monthly (enough for small projects)
+- ✅ **Automatic Deployments**: Push to GitHub = instant deploy
+- ✅ **Easy Monorepo Support**: Deploy multiple services from one repo
+- ✅ **Built-in Monitoring**: CPU, memory, and network metrics
+- ✅ **Custom Domains**: Add your own domain with free SSL
+- ✅ **Environment Variables**: Secure config management
+
+### **Alternative Platforms**
+
+**Vercel** (Frontend only)
+- Best for static sites and serverless functions
+- Deploy: Push to GitHub → Import in Vercel
+- API: Deploy separately on Railway/Render
+
+**Render** (Backend API)
+- Alternative for JSON Server
+- Free tier available
+- Good for microservices
 
 ### **Production Build**
 ```bash
 npm run build
 # Creates optimized bundle in 'build' folder
-# Minified, optimized, ready for production
-# Serve with any static hosting service
+# Minified, tree-shaken, ready for production
 ```
 
 ---
